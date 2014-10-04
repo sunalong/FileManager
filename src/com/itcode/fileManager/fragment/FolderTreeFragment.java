@@ -34,6 +34,7 @@ public class FolderTreeFragment extends Fragment {
 	 */
 	private File[] files;
 	private Folder folder;
+	private FolderTreeAdapter adapter;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -51,7 +52,6 @@ public class FolderTreeFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, "onCreate");
 		initDataList();
-
 		super.onCreate(savedInstanceState);
 	}
 
@@ -74,11 +74,13 @@ public class FolderTreeFragment extends Fragment {
 				folder.setName(file.getName());
 				folder.setFileNumber(file.listFiles().length);
 				folder.setPath(file.getPath());
+				folder.setFolder(true);
 				folderList.add(folder);
 			}else if(file.isFile()){
 				folder.setName(file.getName());
 				folder.setFileNumber(0);
 				folder.setPath(file.getPath());
+				folder.setFolder(false);
 				fileList.add(folder);
 			}
 		}
@@ -108,9 +110,8 @@ public class FolderTreeFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		Log.i(TAG, "onViewCreated");
-//		initDataList();
 		listView = (ListView) view.findViewById(R.id.lvContainer);
-		FolderTreeAdapter adapter = new FolderTreeAdapter(getActivity(), list);
+		adapter = new FolderTreeAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
 		super.onViewCreated(view, savedInstanceState);
 	}

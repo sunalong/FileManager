@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/tvFolderIcon"
+        style="@style/itemIcon"
+        android:text="@string/icon_folder" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/tvFolderIcon"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp" >
+
+        <TextView
+            android:id="@+id/tvFolderName"
+            style="@style/listTitleText"
+            android:text="文件夹名" />
+
+        <TextView
+            android:id="@+id/tvFolderIcon"
+            style="@style/itemInnerIcon"
+            android:text="@string/icon_folder" />
+
+        <TextView
+            android:id="@+id/tvFolderNumber"
+            style="@style/itemInnerText"
+            android:paddingLeft="5dp"
+            android:paddingRight="10dp"
+            android:text="文件夹数目" />
+
+        <TextView
+            android:id="@+id/tvFileIcon"
+            style="@style/itemInnerIcon"
+            android:paddingLeft="5dp"
+            android:text="@string/icon_file" />
+
+        <TextView
+            android:id="@+id/tvFileNumber"
+            style="@style/itemInnerText"
+            android:paddingLeft="5dp"
+            android:text="文件数目" />
+    </LinearLayout>
+
+</RelativeLayout>

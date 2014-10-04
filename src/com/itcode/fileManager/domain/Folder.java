@@ -1,11 +1,27 @@
 package com.itcode.fileManager.domain;
 
+
 /**
  * 文件夹实体
  * @author sunalong
  *
  */
-public class Folder {
+public class Folder{
+	
+	/**
+	 * 是否是文件夹
+	 */
+	private boolean isFolder;
+	
+
+	public boolean isFolder() {
+		return isFolder;
+	}
+
+	public void setFolder(boolean isFolder) {
+		this.isFolder = isFolder;
+	}
+
 	/**
 	 * 文件夹名称
 	 */
@@ -46,6 +62,8 @@ public class Folder {
 
 	@Override
 	public String toString() {
-		return "Folder [name=" + name + ", fileNumber=" + fileNumber + ", path=" + path + "]";
+		return "Folder [isFolder=" + isFolder + ", name=" + name + ", fileNumber=" + fileNumber + ", path=" + path + "]";
 	}
+	
+	
 }
