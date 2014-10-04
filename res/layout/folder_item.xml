@@ -20,6 +20,8 @@
         <TextView
             android:id="@+id/tvFolderName"
             style="@style/listTitleText"
+            android:layout_weight="1"
+            android:paddingRight="5dp"
             android:text="文件夹名" />
 
         <TextView
