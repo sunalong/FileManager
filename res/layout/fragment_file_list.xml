@@ -3,10 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <ListView android:id="@+id/lvContainer"
+
+    <TextView
+        android:id="@+id/tvCurrentFolder"
+        style="@style/listTitleText"
+         android:padding="10dp"
+        android:text="当前文件夹" />
+    <View android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:paddingLeft="2dp"
+        android:background="#D5D5D5"
+        android:paddingRight="2dp"/>
+
+    <ListView
+        android:id="@+id/lvContainer"
         android:layout_width="match_parent"
-        android:scrollbars="none"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:scrollbars="none" />
 
 </LinearLayout>

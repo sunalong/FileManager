@@ -24,7 +24,7 @@
             android:text="文件夹名" />
 
         <TextView
-            android:id="@+id/tvFolderIcon"
+            android:id="@+id/tvFoldersIcon"
             style="@style/itemInnerIcon"
             android:text="@string/icon_folder" />
 
@@ -36,7 +36,7 @@
             android:text="文件夹数目" />
 
         <TextView
-            android:id="@+id/tvFileIcon"
+            android:id="@+id/tvFilesIcon"
             style="@style/itemInnerIcon"
             android:paddingLeft="5dp"
             android:text="@string/icon_file" />
