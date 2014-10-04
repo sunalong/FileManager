@@ -8,9 +8,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.itcode.fileManager.R;
@@ -20,10 +24,11 @@ import com.itcode.fileManager.utils.FileUtils;
 
 /**
  * 显示文件夹及文件的Fragment
+ * 
  * @author sunalong
- *
+ * 
  */
-public class FolderTreeFragment extends Fragment {
+public class FolderTreeFragment extends Fragment implements OnItemClickListener {
 
 	private static final String TAG = "FileListFragment";
 	private ListView listView;
@@ -35,6 +40,16 @@ public class FolderTreeFragment extends Fragment {
 	private File[] files;
 	private Folder folder;
 	private FolderTreeAdapter adapter;
+	/**
+	 * 根路径
+	 */
+	private String RootPath = "/";
+	/**
+	 * 当前父路径
+	 */
+	private String currentFatherPath = RootPath;
+	private List<Folder> folderList;
+	private List<Folder> fileList;
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -51,32 +66,45 @@ public class FolderTreeFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i(TAG, "onCreate");
-		initDataList();
+		initDataList("/");
 		super.onCreate(savedInstanceState);
 	}
 
 	/**
 	 * 初始化数据
 	 */
-	private void initDataList() {
-		files = FileUtils.getFiles("/");
-		if (list != null)
+	private void initDataList(String path) {
+		// 让当前父路径与此路径的父路径相同
+		Log.i(TAG, "当前路径：" + path);
+		if(path.equals(RootPath)){
+			currentFatherPath = null;
+		}
+		else if(0==path.lastIndexOf("/")){
+			currentFatherPath = path.substring(0, path.lastIndexOf("/")+1);
+		}else{
+			currentFatherPath = path.substring(0, path.lastIndexOf("/"));
+		}
+		Log.i(TAG, "当前路径的父路径：" + currentFatherPath);
+		files = FileUtils.getFiles(path);
+		if (list != null){
 			list.clear();
-		else
-			list = new ArrayList<Folder>(FileUtils.getFiles("/").length);
-		
-		List<Folder> folderList = new ArrayList<Folder>();
-		List<Folder> fileList = new ArrayList<Folder>();
-		
-		for(File file:files){
+			folderList.clear();
+			fileList.clear();
+		}
+		else{
+			list = new ArrayList<Folder>(FileUtils.getFiles(path).length);
+			folderList = new ArrayList<Folder>(FileUtils.getFiles(path).length);
+			fileList = new ArrayList<Folder>(FileUtils.getFiles(path).length);
+		}
+		for (File file : files) {
 			folder = new Folder();
-			if(file.isDirectory() && file.listFiles() !=null){
+			if (file.isDirectory() && file.listFiles() != null) {
 				folder.setName(file.getName());
 				folder.setFileNumber(file.listFiles().length);
 				folder.setPath(file.getPath());
 				folder.setFolder(true);
 				folderList.add(folder);
-			}else if(file.isFile()){
+			} else if (file.isFile()) {
 				folder.setName(file.getName());
 				folder.setFileNumber(0);
 				folder.setPath(file.getPath());
@@ -84,8 +112,8 @@ public class FolderTreeFragment extends Fragment {
 				fileList.add(folder);
 			}
 		}
-		list.addAll(folderList);//先将文件夹加入到list中，以便让文件夹在最前面
-		list.addAll(fileList);//将文件夹下的文件加入到list中
+		list.addAll(folderList);// 先将文件夹加入到list中，以便让文件夹在最前面
+		list.addAll(fileList);// 将文件夹下的文件加入到list中
 	}
 
 	@Override
@@ -113,7 +141,44 @@ public class FolderTreeFragment extends Fragment {
 		listView = (ListView) view.findViewById(R.id.lvContainer);
 		adapter = new FolderTreeAdapter(getActivity(), list);
 		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
+		// getActivity().onKeyDown(KeyEvent.KEYCODE_BACK, null);
+
 		super.onViewCreated(view, savedInstanceState);
 	}
 
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Folder folder = (Folder) adapter.getItem(position);
+		Log.i(TAG, position + " onItemClick:" + folder);
+		if (folder.isFolder()) {// 如果是文件夹
+			files = FileUtils.getFiles(folder.getPath());
+			// adapter.clear();
+			initDataList(folder.getPath());
+			for (int i = 0; i < list.size(); i++) {
+				Log.i(TAG, i + " onItem:" + list.get(i));
+			}
+			adapter.setItems(list);
+			adapter.notifyDataSetChanged();
+		} else {// 是文件：高亮打开
+			Toast.makeText(getActivity(), "是文件,高亮打开", 0).show();
+		}
+	}
+
+	/**
+	 * 定义在Fragment中的返回键操作方法，供外界调用
+	 */
+	public boolean onBackPressedFragment() {
+		if (currentFatherPath==null) {
+			return false;
+		} else {
+			initDataList(currentFatherPath);
+			for (int i = 0; i < list.size(); i++) {
+				Log.i(TAG, i + " 返回键Fragment:" + list.get(i));
+			}
+			adapter.setItems(list);
+			adapter.notifyDataSetChanged();
+			return true;
+		}
+	}
 }

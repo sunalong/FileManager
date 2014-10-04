@@ -18,13 +18,18 @@ public class MainActivity extends FragmentActivity {
 	private static final String TAG = "MainActivity";
 	private ViewPager viewPager;
 	private RelativeLayout rlContainer;
+	private FolderTreeFragment fragment;
+	/**
+	 * fragment是否可以继续返回
+	 */
+	private boolean canContinueBack=false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		rlContainer = (RelativeLayout) findViewById(R.id.rlContainer);
-		FolderTreeFragment fragment = new FolderTreeFragment();
+		fragment = new FolderTreeFragment();
 		FragmentManager supportFragmentManager = getSupportFragmentManager();
 		FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
 		fragmentTransaction.replace(R.id.rlContainer, fragment);
@@ -35,4 +40,17 @@ public class MainActivity extends FragmentActivity {
 		// viewPager.add(fragment);
 	}
 
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		/**
+		 * ①：如果Fragment为空，则调用默认的返回键操作
+		 * ②：如果fragment不能继续返回了，则同样调用市府的返回键操作
+		 */
+		if (fragment == null||!fragment.onBackPressedFragment()) {
+//			canContinueBack = fragment.onBackPressedFragment();
+			Log.i(TAG,"canContinueBack:"+canContinueBack);
+			super.onBackPressed();
+		}
+	}
 }

@@ -82,6 +82,7 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 	 * @param root
 	 */
 	public void setItems(List<Folder> list) {
+		clear();
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).isFolder())
 				addItem(TYPE_FOLDER, list.get(i));
@@ -96,13 +97,13 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 	@Override
 	protected View initialize(int type, View view) {
 		view = super.initialize(type, view);
-		//TODO:显示文件夹item中的图标
+		// TODO:显示文件夹item中的图标
 		switch (type) {
 		case TYPE_FOLDER:
-			TypefaceUtils.setOcticons((TextView)view.findViewById(id.tvFolderIcon));
+			TypefaceUtils.setOcticons((TextView) view.findViewById(id.tvFolderIcon), (TextView) view.findViewById(id.tvFoldersIcon), (TextView) view.findViewById(id.tvFilesIcon));
 			break;
 		case TYPE_FILE:
-			TypefaceUtils.setOcticons((TextView)view.findViewById(id.tvFileIcon));
+			TypefaceUtils.setOcticons((TextView) view.findViewById(id.tvFileIcon));
 			break;
 		}
 		return view;
@@ -118,21 +119,27 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 	protected void update(final int position, final Object item, final int type) {
 		Log.i(TAG, "update.position:" + position);
 		Log.i(TAG, "update.list.size:" + list.size());
-		Folder folder;
-		folder = list.get(position);
-		switch (type) {
-		case TYPE_FOLDER:
-			Log.i(TAG, "此为文件夹");
-			// {id.tvFolderName,id.tvFolderNumber,id.tvFileNumber};
-			setText(0, position + " " + folder.getName());
-			setText(1, "" + folder.getFileNumber());
-			setText(2, "" + folder.getFileNumber());
-			break;
-		case TYPE_FILE:
-			Log.i(TAG, "此为文件");
-			setText(0, position + " " + folder.getName());
-			setText(1, "13kb");
-			break;
+		Folder folder = null;
+		if (position < list.size()) {
+			folder = list.get(position);
+
+			switch (type) {
+			case TYPE_FOLDER:
+				Log.i(TAG, "此为文件夹");
+				// {id.tvFolderName,id.tvFolderNumber,id.tvFileNumber};
+				setText(0, position + " " + folder.getName());
+				setText(1, "" + folder.getFileNumber());
+				setText(2, "" + folder.getFileNumber());
+				break;
+			case TYPE_FILE:
+				Log.i(TAG, "此为文件");
+				setText(0, position + " " + folder.getName());
+				setText(1, "13kb");
+				break;
+			}
+		} else {
+			setText(0, position + " " + item);
+
 		}
 	}
 }
