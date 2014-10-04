@@ -5,10 +5,12 @@ import java.util.List;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.kevinsawicki.wishlist.MultiTypeAdapter;
 import com.itcode.fileManager.R.id;
 import com.itcode.fileManager.domain.Folder;
+import com.itcode.fileManager.utils.TypefaceUtils;
 
 /**
  * 显示文件夹及文件的Fragment的Adapter
@@ -94,6 +96,15 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 	@Override
 	protected View initialize(int type, View view) {
 		view = super.initialize(type, view);
+		//TODO:显示文件夹item中的图标
+		switch (type) {
+		case TYPE_FOLDER:
+			TypefaceUtils.setOcticons((TextView)view.findViewById(id.tvFolderIcon));
+			break;
+		case TYPE_FILE:
+			TypefaceUtils.setOcticons((TextView)view.findViewById(id.tvFileIcon));
+			break;
+		}
 		return view;
 	}
 

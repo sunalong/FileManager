@@ -6,6 +6,7 @@
       <TextView
         android:id="@+id/tvFileIcon"
         style="@style/itemIcon"
+        android:layout_centerVertical="true"
         android:text="@string/icon_file" />
 
       <LinearLayout
