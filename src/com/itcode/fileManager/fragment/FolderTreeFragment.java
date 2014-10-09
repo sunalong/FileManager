@@ -8,12 +8,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,10 +89,11 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		tvCurrentFolder.setText(path);
 		if (path.equals(RootPath)) {
 			currentFatherPath = null;
-		} else if (0 == path.lastIndexOf("/")) {//类似: /mnt,/cache等的父路径为：/
+		} else if (0 == path.lastIndexOf("/")) {// 类似: /mnt,/cache等的父路径为：/
 			currentFatherPath = path.substring(0, path.lastIndexOf("/") + 1);
 		} else {
-			currentFatherPath = path.substring(0, path.lastIndexOf("/"));// 类似： /mnt/sdcard的父路径为：/mnt
+			currentFatherPath = path.substring(0, path.lastIndexOf("/"));// 类似：
+																			// /mnt/sdcard的父路径为：/mnt
 		}
 		Log.i(TAG, "当前路径的父路径：" + currentFatherPath);
 		files = FileUtils.getFiles(path);
@@ -110,15 +109,14 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		for (File file : files) {
 			folder = new Folder();
 			if (file.isDirectory()) {
-				folder.setName(file.getName());
 				// TODO:计算此文件夹下的文件、文件夹个数
 				int len = countFiles(file);
 				folder.setFileNumber(len);
-				if (len == -1)//需要root
+				if (len == -1)// 需要root
 					folder.setFolderNumber(-1);
 				else
 					folder.setFolderNumber(file.listFiles().length - len);
-
+				folder.setName(file.getName());
 				folder.setPath(file.getPath());
 				folder.setFolder(true);
 				folderList.add(folder);
@@ -146,7 +144,7 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		Log.i(TAG, "countFiles:" + file.getName() + " " + file.getPath());
 
 		File[] listFiles = file.listFiles();
-		if (listFiles == null)//需要root
+		if (listFiles == null)// 需要root
 			return -1;
 		for (int i = 0; i < listFiles.length; i++) {
 			if (listFiles[i].isFile())

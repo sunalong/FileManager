@@ -3,12 +3,17 @@ package com.itcode.fileManager.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.format.Formatter;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.kevinsawicki.wishlist.MultiTypeAdapter;
+import com.itcode.fileManager.R;
 import com.itcode.fileManager.R.id;
 import com.itcode.fileManager.domain.Folder;
 import com.itcode.fileManager.utils.TypefaceUtils;
@@ -128,15 +133,22 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 			case TYPE_FOLDER:
 				Log.i(TAG, "此为文件夹");
 				// {id.tvFolderName,id.tvFolderNumber,id.tvFileNumber};
-				setText(0, position + " " + folder.getName());
-				setText(1, "" + folder.getFolderNumber());
-				setText(2, "" + folder.getFileNumber());
+				int folderNumber = folder.getFolderNumber();
+				setText(1, String.valueOf(folderNumber));
+				setText(2, String.valueOf(folder.getFileNumber()));
+				SpannableStringBuilder ssb = new SpannableStringBuilder(folder.getName());
+				if (folderNumber == -1) {
+					ssb.setSpan(new ForegroundColorSpan(Color.RED), 0, folder.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				} else {
+					ssb.setSpan(new ForegroundColorSpan(R.color.text), 0, folder.getName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+				}
+				setText(0, ssb);
 				break;
 			case TYPE_FILE:
 				Log.i(TAG, "此为文件");
-				//id.tvFile, id.tvSize
+				// id.tvFile, id.tvSize
 				setText(0, position + " " + folder.getName());
-				setText(1,Formatter.formatFileSize(context, folder.getFileSize()));
+				setText(1, Formatter.formatFileSize(context, folder.getFileSize()));
 				break;
 			}
 		} else {
