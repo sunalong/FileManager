@@ -85,6 +85,11 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	 */
 	private void initDataList(String path) {
 		// 让当前父路径与此路径的父路径相同
+		files = FileUtils.getFiles(path);
+		if(files == null){//当前路径是需要root的，不能遍历其下的文件，所以会返回null
+			Toast.makeText(getActivity(), FileUtils.getName(path)+"需要root权限!", 0).show();
+			return;
+		}
 		Log.i(TAG, "当前路径：" + path);
 		tvCurrentFolder.setText(path);
 		if (path.equals(RootPath)) {
@@ -96,7 +101,7 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 																			// /mnt/sdcard的父路径为：/mnt
 		}
 		Log.i(TAG, "当前路径的父路径：" + currentFatherPath);
-		files = FileUtils.getFiles(path);
+		
 		if (list != null) {
 			list.clear();
 			folderList.clear();
