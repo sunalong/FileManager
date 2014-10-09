@@ -91,10 +91,10 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		tvCurrentFolder.setText(path);
 		if (path.equals(RootPath)) {
 			currentFatherPath = null;
-		} else if (0 == path.lastIndexOf("/")) {
+		} else if (0 == path.lastIndexOf("/")) {//类似: /mnt,/cache等的父路径为：/
 			currentFatherPath = path.substring(0, path.lastIndexOf("/") + 1);
 		} else {
-			currentFatherPath = path.substring(0, path.lastIndexOf("/"));
+			currentFatherPath = path.substring(0, path.lastIndexOf("/"));// 类似： /mnt/sdcard的父路径为：/mnt
 		}
 		Log.i(TAG, "当前路径的父路径：" + currentFatherPath);
 		files = FileUtils.getFiles(path);
@@ -109,12 +109,16 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		}
 		for (File file : files) {
 			folder = new Folder();
-			if (file.isDirectory() && file.listFiles() != null) {
+			if (file.isDirectory()) {
 				folder.setName(file.getName());
-				//TODO:计算此文件夹下的文件个数
-				folder.setFileNumber(countFiles(file));
-//				folder.setFileNumber(file.listFiles().length);
-				
+				// TODO:计算此文件夹下的文件、文件夹个数
+				int len = countFiles(file);
+				folder.setFileNumber(len);
+				if (len == -1)//需要root
+					folder.setFolderNumber(-1);
+				else
+					folder.setFolderNumber(file.listFiles().length - len);
+
 				folder.setPath(file.getPath());
 				folder.setFolder(true);
 				folderList.add(folder);
@@ -132,18 +136,22 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 
 	/**
 	 * 计算当前文件夹下的文件个数
+	 * 
 	 * @param file
 	 * @return
 	 */
 	private int countFiles(File file) {
-		if(!file.isDirectory())
-			return 0;
-		int fileNumber=0;
+		int fileNumber = 0;
+		Log.i(TAG, "countFiles:" + file.getName() + " " + file.getPath());
+
 		File[] listFiles = file.listFiles();
-		for(int i=0;i<listFiles.length;i++){
-			if(listFiles[i].isFile())
+		if (listFiles == null)//需要root
+			return -1;
+		for (int i = 0; i < listFiles.length; i++) {
+			if (listFiles[i].isFile())
 				fileNumber++;
 		}
+		listFiles = null;
 		return fileNumber;
 	}
 
@@ -203,7 +211,7 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	 * 定义在Fragment中的返回键操作方法，供外界调用
 	 */
 	public boolean onBackPressedFragment() {
-		if (currentFatherPath==null) {
+		if (currentFatherPath == null) {
 			return false;
 		} else {
 			initDataList(currentFatherPath);

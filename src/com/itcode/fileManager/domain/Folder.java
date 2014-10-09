@@ -30,6 +30,10 @@ public class Folder{
 	 * 里面包含的文件个数
 	 */
 	private int fileNumber;
+	/**
+	 * 里面包含的文件夹个数
+	 */
+	private int folderNumber;
 	
 	/**
 	 * 此文件夹的路径
@@ -60,10 +64,18 @@ public class Folder{
 		this.path = path;
 	}
 
+	
+	public int getFolderNumber() {
+		return folderNumber;
+	}
+
+	public void setFolderNumber(int folderNumber) {
+		this.folderNumber = folderNumber;
+	}
+
 	@Override
 	public String toString() {
-		return "Folder [isFolder=" + isFolder + ", name=" + name + ", fileNumber=" + fileNumber + ", path=" + path + "]";
+		return "Folder [isFolder=" + isFolder + ", name=" + name + ", fileNumber=" + fileNumber + ", folderNumber=" + folderNumber + ", path=" + path + "]";
 	}
-	
-	
+
 }

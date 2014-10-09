@@ -128,7 +128,7 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 				Log.i(TAG, "此为文件夹");
 				// {id.tvFolderName,id.tvFolderNumber,id.tvFileNumber};
 				setText(0, position + " " + folder.getName());
-				setText(1, "" + folder.getFileNumber());
+				setText(1, "" + folder.getFolderNumber());
 				setText(2, "" + folder.getFileNumber());
 				break;
 			case TYPE_FILE:
