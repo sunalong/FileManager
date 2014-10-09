@@ -31,6 +31,10 @@ public class Folder{
 	 */
 	private int fileNumber;
 	/**
+	 * 文件大小
+	 */
+	private long fileSize;
+	/**
 	 * 里面包含的文件夹个数
 	 */
 	private int folderNumber;
@@ -73,9 +77,19 @@ public class Folder{
 		this.folderNumber = folderNumber;
 	}
 
+	
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+
 	@Override
 	public String toString() {
-		return "Folder [isFolder=" + isFolder + ", name=" + name + ", fileNumber=" + fileNumber + ", folderNumber=" + folderNumber + ", path=" + path + "]";
+		return "Folder [isFolder=" + isFolder + ", name=" + name + ", fileNumber=" + fileNumber + ", fileSize=" + fileSize + ", folderNumber=" + folderNumber + ", path=" + path + "]";
 	}
+
 
 }

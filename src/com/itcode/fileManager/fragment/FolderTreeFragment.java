@@ -125,6 +125,7 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 			} else if (file.isFile()) {
 				folder.setName(file.getName());
 				folder.setFileNumber(0);
+				folder.setFileSize(file.length());
 				folder.setPath(file.getPath());
 				folder.setFolder(false);
 				fileList.add(folder);

@@ -3,6 +3,7 @@ package com.itcode.fileManager.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -133,8 +134,9 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 				break;
 			case TYPE_FILE:
 				Log.i(TAG, "此为文件");
+				//id.tvFile, id.tvSize
 				setText(0, position + " " + folder.getName());
-				setText(1, "13kb");
+				setText(1,Formatter.formatFileSize(context, folder.getFileSize()));
 				break;
 			}
 		} else {
