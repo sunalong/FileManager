@@ -35,6 +35,9 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	private static final String TAG = "FileListFragment";
 	private ListView listView;
 	private View view;
+	/**
+	 * 当前目录下的文件夹及文件的列表集合
+	 */
 	private List<Folder> list;
 	/**
 	 * 指定路径(根路径/)下的文件列表
@@ -50,7 +53,13 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	 * 当前父路径
 	 */
 	private String currentFatherPath = RootPath;
+	/**
+	 * 当前目录下的文件夹列表
+	 */
 	private List<Folder> folderList;
+	/**
+	 * 当前目录下手文件列表
+	 */
 	private List<Folder> fileList;
 	private TextView tvCurrentFolder;
 
@@ -102,7 +111,10 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 			folder = new Folder();
 			if (file.isDirectory() && file.listFiles() != null) {
 				folder.setName(file.getName());
-				folder.setFileNumber(file.listFiles().length);
+				//TODO:计算此文件夹下的文件个数
+				folder.setFileNumber(countFiles(file));
+//				folder.setFileNumber(file.listFiles().length);
+				
 				folder.setPath(file.getPath());
 				folder.setFolder(true);
 				folderList.add(folder);
@@ -116,6 +128,23 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 		}
 		list.addAll(folderList);// 先将文件夹加入到list中，以便让文件夹在最前面
 		list.addAll(fileList);// 将文件夹下的文件加入到list中
+	}
+
+	/**
+	 * 计算当前文件夹下的文件个数
+	 * @param file
+	 * @return
+	 */
+	private int countFiles(File file) {
+		if(!file.isDirectory())
+			return 0;
+		int fileNumber=0;
+		File[] listFiles = file.listFiles();
+		for(int i=0;i<listFiles.length;i++){
+			if(listFiles[i].isFile())
+				fileNumber++;
+		}
+		return fileNumber;
 	}
 
 	@Override
