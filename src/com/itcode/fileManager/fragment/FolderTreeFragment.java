@@ -115,12 +115,8 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 			folder = new Folder();
 			if (file.isDirectory()) {
 				// TODO:计算此文件夹下的文件、文件夹个数
-				int len = countFiles(file);
-				folder.setFileNumber(len);
-				if (len == -1)// 需要root
-					folder.setFolderNumber(-1);
-				else
-					folder.setFolderNumber(file.listFiles().length - len);
+				folder.setFileNumber(countFiles(file,false));
+				folder.setFolderNumber(countFiles(file,true));
 				folder.setName(file.getName());
 				folder.setPath(file.getPath());
 				folder.setFolder(true);
@@ -142,18 +138,24 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	 * 计算当前文件夹下的文件个数
 	 * 
 	 * @param file
-	 * @return
+	 * @param isFolder true 表示计算文件夹个数;false表示计算文件个数
+	 * @return 如果计算文件夹个数，则返回的是file中文件夹个数;如果计算文件个数，则返回的是file中的文件个数
 	 */
-	private int countFiles(File file) {
+	private int countFiles(File file,boolean isFolder) {
 		int fileNumber = 0;
 		Log.i(TAG, "countFiles:" + file.getName() + " " + file.getPath());
 
 		File[] listFiles = file.listFiles();
 		if (listFiles == null)// 需要root
 			return -1;
-		for (int i = 0; i < listFiles.length; i++) {
-			if (listFiles[i].isFile())
-				fileNumber++;
+		if(isFolder){//如果是文件夹
+			for (int i = 0; i < listFiles.length; i++)
+				if (listFiles[i].isDirectory())
+					fileNumber++;
+		}else{//如果是文件
+			for (int i = 0; i < listFiles.length; i++)
+				if (listFiles[i].isFile())
+					fileNumber++;
 		}
 		listFiles = null;
 		return fileNumber;
