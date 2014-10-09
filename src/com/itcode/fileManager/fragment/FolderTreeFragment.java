@@ -8,10 +8,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -172,7 +174,7 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 	 * 定义在Fragment中的返回键操作方法，供外界调用
 	 */
 	public boolean onBackPressedFragment() {
-		if (currentFatherPath == null) {
+		if (currentFatherPath==null) {
 			return false;
 		} else {
 			initDataList(currentFatherPath);
