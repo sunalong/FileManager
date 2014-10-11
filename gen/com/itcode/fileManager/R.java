@@ -29,26 +29,28 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000d;
-        public static final int lvContainer=0x7f09000c;
+        public static final int action_settings=0x7f09000e;
+        public static final int lvContainer=0x7f09000d;
         public static final int rlContainer=0x7f090000;
-        public static final int tvCurrentFolder=0x7f09000b;
-        public static final int tvFile=0x7f090003;
-        public static final int tvFileIcon=0x7f090002;
-        public static final int tvFileNumber=0x7f09000a;
-        public static final int tvFilesIcon=0x7f090009;
-        public static final int tvFolderIcon=0x7f090005;
-        public static final int tvFolderName=0x7f090006;
-        public static final int tvFolderNumber=0x7f090008;
-        public static final int tvFoldersIcon=0x7f090007;
-        public static final int tvSize=0x7f090004;
+        public static final int tvCurrentFolder=0x7f09000c;
+        public static final int tvFile=0x7f090004;
+        public static final int tvFileIcon=0x7f090003;
+        public static final int tvFileNumber=0x7f09000b;
+        public static final int tvFilesIcon=0x7f09000a;
+        public static final int tvFolderIcon=0x7f090006;
+        public static final int tvFolderName=0x7f090007;
+        public static final int tvFolderNumber=0x7f090009;
+        public static final int tvFoldersIcon=0x7f090008;
+        public static final int tvSize=0x7f090005;
         public static final int vpContainer=0x7f090001;
+        public static final int wvCode=0x7f090002;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int file_item=0x7f030001;
-        public static final int folder_item=0x7f030002;
-        public static final int fragment_file_list=0x7f030003;
+        public static final int activity_view_code=0x7f030001;
+        public static final int file_item=0x7f030002;
+        public static final int folder_item=0x7f030003;
+        public static final int fragment_file_list=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f080000;

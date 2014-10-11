@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.SpannableStringBuilder;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itcode.fileManager.R;
+import com.itcode.fileManager.ViewCodeActivity;
 import com.itcode.fileManager.adapter.FolderTreeAdapter;
 import com.itcode.fileManager.domain.Folder;
 import com.itcode.fileManager.utils.FileUtils;
@@ -255,6 +257,9 @@ public class FolderTreeFragment extends Fragment implements OnItemClickListener 
 			adapter.notifyDataSetChanged();
 		} else {// 是文件：高亮打开
 			Toast.makeText(getActivity(), "是文件,高亮打开", 0).show();
+			Intent intent = new Intent(getActivity(),ViewCodeActivity.class);
+			intent.putExtra("path", folder.getPath());
+			startActivity(intent);
 		}
 	}
 
