@@ -123,15 +123,15 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 	 */
 	@Override
 	protected void update(final int position, final Object item, final int type) {
-		Log.i(TAG, "update.position:" + position);
-		Log.i(TAG, "update.list.size:" + list.size());
+//		Log.i(TAG, "update.position:" + position);
+//		Log.i(TAG, "update.list.size:" + list.size());
 		Folder folder = null;
 		if (position < list.size()) {
 			folder = list.get(position);
 
 			switch (type) {
 			case TYPE_FOLDER:
-				Log.i(TAG, "此为文件夹");
+//				Log.i(TAG, "此为文件夹");
 				// {id.tvFolderName,id.tvFolderNumber,id.tvFileNumber};
 				int folderNumber = folder.getFolderNumber();
 				setText(1, String.valueOf(folderNumber));
@@ -145,7 +145,7 @@ public class FolderTreeAdapter extends MultiTypeAdapter {
 				setText(0, ssb);
 				break;
 			case TYPE_FILE:
-				Log.i(TAG, "此为文件");
+//				Log.i(TAG, "此为文件");
 				// id.tvFile, id.tvSize
 				setText(0, position + " " + folder.getName());
 				setText(1, Formatter.formatFileSize(context, folder.getFileSize()));
